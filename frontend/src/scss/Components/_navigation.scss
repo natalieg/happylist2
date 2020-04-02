@@ -2,6 +2,10 @@
     height: 22px !important;
     margin-top: 0px;
     padding: 4px;
+    span {
+        position: relative;
+        top: 4px;
+    }
 }
 
 .navbar {
@@ -10,7 +14,7 @@
     background-color: rgb(62, 62, 66);
     color: white;
 
-    .navBtn {
+   .navBtn {
         padding: 5px;
         margin: 0;
         background-color: inherit;

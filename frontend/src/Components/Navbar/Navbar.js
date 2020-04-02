@@ -10,11 +10,13 @@ function Navbar() {
                         Areas
                     </Link>
                 </li>
+                <span>&bull;</span>
                 <li>
                     <Link className="navBtn" to="/generateList">
                         List
                     </Link>
                 </li>
+                <span>&bull;</span>
                 <li>
                     <Link className="navBtn" to="/contact">
                         Contact

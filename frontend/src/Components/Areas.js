@@ -4,7 +4,7 @@ import NewArea from './NewArea';
 import UpperView from './UpperView';
 import apis from '../api'
 import Areabar from './Navbar/Areabar';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 //#Check Pre defined standard colors, maybe change position later
 //const areaColors = ['rgba(168, 201, 226, 0.5)', 'rgba(190, 234, 202, 0.4)', 'rgba(245, 242, 189, 0.5)', 'rgba(232, 217, 201, 0.5)', 'rgba(247, 190, 196, 0.6)'];
@@ -16,7 +16,8 @@ export default class Areas extends Component {
         dummyCounter: 0,
         allTaskCount: 0,
         newAreaActive: false,
-        areaActive: true
+        areaActive: true,
+        showInfo: true
     }
 
     // Loading Areas 
@@ -87,6 +88,10 @@ export default class Areas extends Component {
         this.setState({ newAreaActive: false })
     }
 
+    changeInfoDisplay = () => {
+        this.setState({showInfo: !this.state.showInfo})
+    }
+
     render() {
         // Renders all Areas
         let displayareas = this.state.areas.map((area, index) => {
@@ -112,14 +117,24 @@ export default class Areas extends Component {
                         clickArea={this.toggleActive}
                         nameArchive="Archive Finished Tasks"
                         archiveTodos={this.archiveFinishedTodos}
+                        changeInfoDisplay={this.changeInfoDisplay}
                     />
+                    {this.state.showInfo &&
+                        <div className="infoText">
+                            Happylist helps you to gain a better Work-Life-Balance and to stop procrastinating!<br/>
+                            You can add different Areas for your life e.g. Health and Work and add Tasks to those Areas.<br/>
+                            After you filled your Areas you can create a new todo list.
+                            Have fun playing around! 
+                            <input type="button" value="OK" onClick={this.changeInfoDisplay}></input>
+                            <span style={{fontSize:".8em"}}>This project is still a work in progress. Important features like a Login will follow!</span>
+                        </div>}
                     <Switch>
                         {/* Shows all the Areas */}
                         <Route path="/">
                             <div className='moduleOverview'>
                                 {this.state.newAreaActive ?
                                     <NewArea cancelClick={this.toggleActive} reloadAreas={this.handleLoadData} /> : null}
-                                {this.state.isLoading ? "Loading Data" :  displayareas}
+                                {this.state.isLoading ? "Loading Data" : displayareas}
                             </div>
                         </Route>
                     </Switch>
