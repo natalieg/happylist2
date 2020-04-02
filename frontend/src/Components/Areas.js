@@ -17,11 +17,20 @@ export default class Areas extends Component {
         allTaskCount: 0,
         newAreaActive: false,
         areaActive: true,
-        showInfo: true
+        showInfo: false
     }
 
     // Loading Areas 
     componentDidMount = async () => {
+        let visited = localStorage["alreadyVisited"];
+        if(visited) {
+            this.setState({ showInfo: false })
+            //do not view Popup
+       } else {
+            //this is the first time
+            localStorage["alreadyVisited"] = true;
+            this.setState({ showInfo: true});
+       }
         this.setState({ isLoading: true })
         await apis.getAreaList().then(response => {
             // console.log(response.data)
