@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', apiRouter);
 
-if(process.env.node_env === "production"){
+if(process.env.NODE_ENV === "production"){
     app.use(express.static("frontend/build"))
     app.get("*",(req, res) => {
         res.sendfile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
