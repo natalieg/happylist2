@@ -1,0 +1,9 @@
+.inputError {
+    box-shadow: inset 0 0 5px red;
+    border: 1px solid rgba(255, 0, 0, 0.658);
+    // border: 1px solid red;
+}
+
+.inputOkay {
+    border: none // border: 1px solid grey ;
+}

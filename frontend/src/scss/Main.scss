@@ -1,0 +1,13 @@
+//@use "variables";
+@import "_variables"; //for some reason this is ignored??
+@import "./Components/errorHandling";
+@import "./basics";
+
+@import "./Components/_navigation";
+
+@import "./Components/areaOverview";
+@import "./Components/singleArea";
+
+@import "./Components/editTodo";
+@import "./Components/list";
+@import "./Components/contactForm";

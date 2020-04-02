@@ -1,0 +1,116 @@
+body {
+  text-align: center;
+  position: absolute;
+  margin: 0 auto;
+  background-image: url(./img/white-flower-plant-3275696.jpg);
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+.areaOverview {
+  background-color: rgba(236, 232, 222, 0.733);
+  padding: 5px;
+  width: 100vw;
+  position: relative;
+  left: 0;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 2px 2px 10px 0px #585858;
+          box-shadow: 2px 2px 10px 0px #585858;
+}
+
+.areaOverview h1 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 100;
+  margin: 5px;
+}
+
+.moduleOverview {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 10px 10px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.singleArea {
+  -webkit-box-shadow: 2px 2px 10px 0px #585858;
+          box-shadow: 2px 2px 10px 0px #585858;
+  border-radius: 20px;
+  width: 20%;
+  min-width: 200px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  max-height: 400px;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.singleArea h2 {
+  margin: 0;
+}
+
+.singleArea ::-webkit-scrollbar {
+  width: 10px;
+}
+
+.singleArea ::-webkit-scrollbar-track {
+  background: #dbd4cd;
+  border-radius: 20px;
+}
+
+.singleArea ::-webkit-scrollbar-thumb {
+  background: #b1a091;
+  border-radius: 20px;
+}
+
+.singleArea ::-webkit-scrollbar-thumb:hover {
+  background: #816d5b;
+}
+
+.areaSummary {
+  margin-top: 0%;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #816d5b;
+}
+
+.todoItemContainer {
+  background-color: white;
+  border: 10px solid white;
+  border-radius: 20px;
+  margin-top: 10px;
+  height: 200px;
+  overflow-y: auto;
+}
+
+.todoItemContainer p {
+  padding: 2px;
+  margin: 4px;
+  -webkit-transition: .5s;
+  transition: .5s;
+}
+
+.todoItemContainer p::before {
+  content: 'o ';
+}
+
+.todoItemContainer p:hover {
+  background-color: #dbd4cd;
+  border-radius: 4px;
+}
+
+.intro {
+  text-align: center;
+  padding: 50px;
+}
+/*# sourceMappingURL=App.css.map */

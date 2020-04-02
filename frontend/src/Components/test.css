@@ -1,0 +1,25 @@
+.test{
+    transition: 3s;
+    background-color: aqua;
+    height: 0px;
+}
+
+.test.bigger {
+    transition: 3s;
+    height: 170px;
+    background-color: violet;
+}
+
+.test2 {
+    opacity: 0;
+    height: 0px;
+    overflow: hidden;
+    transition: height .5s ease-in;
+}
+
+.test2_2 {
+    opacity: 1;
+    height: 160px;
+    overflow: hidden;
+    transition: height .5s ease-in;
+}
