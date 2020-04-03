@@ -49,12 +49,16 @@ export default class SingleTodoInArea extends Component {
         this.setState({ editActive: !tempState })
     }
 
+    doubleClickEdit = () => {
+        this.setState({editActive: true})
+    }
+
     render() {
         return (
             <div className={`singleTodoArea ${(this.state.todo.finished && !this.state.editActive) ? "todoComplete" : "todoIncomplete"}`}
                 onMouseEnter={this.handleMouseOver}
                 onMouseLeave={this.handleMouseOut}
-                onDoubleClick={this.handleEditMode}
+                onDoubleClick={this.doubleClickEdit}
                 key={this.state.todo._id}>
                 {!this.state.editActive &&
                     this.state.todo.todoName
