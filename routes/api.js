@@ -312,7 +312,7 @@ router.delete('/deleteTodo', async (req, res, next) => {
 // Edit a specific Todo(using id)
 router.post('/editTodo', async (req, res, next) => {
     let { todoId, todoName, finishedParts, allParts, partName,
-        partTime, totalTime, difficulty, sessionGoal } = req.body;
+        partTime, totalTime, difficulty, sessionGoal, sessionTime } = req.body;
     let userId = fixedId; // FIXME
     let finished = false;
     if (finishedParts >= allParts) {
@@ -326,7 +326,8 @@ router.post('/editTodo', async (req, res, next) => {
         allParts: allParts,
         partName: partName,
         sessionGoal: sessionGoal,
-        time: partTime,
+        sessionTime: sessionTime,
+        partTime: partTime,
         totalTime: totalTime,
         difficulty: difficulty,
         finished: finished

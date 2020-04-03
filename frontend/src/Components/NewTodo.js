@@ -147,17 +147,21 @@ export default class NewTodo extends Component {
         this.setState({ todoName: value })
     }
 
-    // Handles Input for Goalnumber, this can be
-    // either a number of x or minutes
+    // Handles Input for Goalnumber (ALL PARTS), 
+    // this can be either a number of x or minutes
     handleInputParts = (e) => {
         const value = e.target.value;
         const timeCalc = value * this.state.time;
-        const sessionCalc = parseInt(value / this.state.sessionGoal);
         this.setState({
             totalTime: timeCalc,
-            parts: value,
-            partsForTimedGoals: sessionCalc
+            parts: value
         })
+        if(this.state.timedGoal){
+            const sessionGoalCalc = parseInt(value / this.state.partsForTimedGoals)
+            this.setState({sessionGoal: sessionGoalCalc})
+        } else {
+
+        }
     }
 
     handleInputPartName = (e) => {
@@ -257,10 +261,13 @@ export default class NewTodo extends Component {
         await apis.sendNewTodo(data).then(response => {
             this.setState({
                 todoName: '',
-                // parts: 1,
+                parts: 1,
+                sessionGoal: 1,
                 partName: "Parts",
                 time: 10,
-                // totalTime: 10,
+                sessionTime: 10,
+                totalTime: 10,
+                partsForTimedGoals: 1,
                 difficulty: ''
             })
         }).catch(err => {
@@ -285,17 +292,28 @@ export default class NewTodo extends Component {
                     {this.state.numError ? `Please Check: ${this.state.numErrorText}` : null}
                 </div>
                 <div className={`${this.state.divClass} newTodo`}>
-
-                    <input
-                        id="taskNameInput"
-                        ref={(input) => { this.taskTitleInput = input; }}
-                        type="text" name="todoName" placeholder="Taskname"
-                        className={`${this.state.errors.todoName ? "inputError" : null} taskNameInput`}
-                        autoComplete="off"
-                        value={this.state.todoName}
-                        onChange={this.handleInputName}
-                        onKeyDown={this.checKey} />
-
+                    <p>
+                        <TimeGoalTip title="is it a time goal?" arrow placement="top-end">
+                            <span>
+                                <input id="timeGoalCheck"
+                                    type="checkbox"
+                                    className="checkbox"
+                                    value={this.state.timedGoal}
+                                    onChange={this.changeTimedGoalType}
+                                />
+                                <label htmlFor="timeGoalCheck"></label>
+                            </span>
+                        </TimeGoalTip>
+                        <input
+                            id="taskNameInput"
+                            ref={(input) => { this.taskTitleInput = input; }}
+                            type="text" name="todoName" placeholder="Taskname"
+                            className={`${this.state.errors.todoName ? "inputError" : null} taskNameInput`}
+                            autoComplete="off"
+                            value={this.state.todoName}
+                            onChange={this.handleInputName}
+                            onKeyDown={this.checKey} />
+                    </p>
                     <p className="taskGoal">
                         {/* FIXME: STYLING */}
                         <LightTooltip title="Goal for this Task" arrow placement="left">
@@ -327,17 +345,6 @@ export default class NewTodo extends Component {
                                 }
                             </span>
                         </LightTooltip>
-                        <TimeGoalTip title="is it a time goal?" arrow placement="top-end">
-                            <span>
-                                <input id="timeGoalCheck"
-                                    type="checkbox"
-                                    className="checkbox"
-                                    value={this.state.timedGoal}
-                                    onChange={this.changeTimedGoalType}
-                                />
-                                <label htmlFor="timeGoalCheck"></label>
-                            </span>
-                        </TimeGoalTip>
                     </p>
                     <LightTooltip title="How much do you want to do in a session?" arrow placement="left">
                         <p>
