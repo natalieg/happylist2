@@ -1,7 +1,7 @@
 .areaOverview {
     background-color: rgba(236, 232, 222, 0.733);
     padding: 5px;
-    width: 100vw;
+    // width: 100vw;
     position: relative;
     left: 0;
     // margin-bottom: 20px;
@@ -17,6 +17,7 @@
 
 .moduleOverview {
     max-width: 1600px;
+    min-height: 79vh;
     margin: 0 auto;
     padding: 10px 10px 10px 0px;
     display: flex;

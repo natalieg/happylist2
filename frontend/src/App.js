@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar'
+import MainView from './Components/MainView'
 import Areas from './Components/Areas'
 import GenerateList from './Components/GenerateList'
 import './scss/Main.scss';
@@ -21,10 +22,12 @@ export default class App extends Component {
             <Route path="/contact" exact>
               <ContactForm/>
             </Route>
-            <Route path="/">
+            <Route path="/areas" exact>
               <Areas />
             </Route>
-  
+            <Route path="/">
+              <MainView />
+            </Route>
           </Switch>
         </Router>
       </div>

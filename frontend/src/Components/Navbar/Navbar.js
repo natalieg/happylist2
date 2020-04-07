@@ -6,7 +6,7 @@ function Navbar() {
         <div className="navbar upperBar">
             <ul>
                 <li>
-                    <Link className="navBtn" to="/">
+                    <Link className="navBtn" to="/areas">
                         Areas
                     </Link>
                 </li>
