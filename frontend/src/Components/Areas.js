@@ -10,47 +10,51 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 //const areaColors = ['rgba(168, 201, 226, 0.5)', 'rgba(190, 234, 202, 0.4)', 'rgba(245, 242, 189, 0.5)', 'rgba(232, 217, 201, 0.5)', 'rgba(247, 190, 196, 0.6)'];
 
 export default class Areas extends Component {
-    state = {
-        areas: [],
-        isLoading: true,
-        dummyCounter: 0,
-        allTaskCount: 0,
-        newAreaActive: false,
-        areaActive: true,
-        showInfo: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            areas: this.props.areas,
+            isLoading: true,
+            dummyCounter: 0,
+            allTaskCount: 0,
+            newAreaActive: false,
+            areaActive: true,
+            showInfo: false,
+            testProp: props.testProp,
+        }
     }
 
     // Loading Areas 
     componentDidMount = async () => {
         let visited = localStorage["alreadyVisited"];
-        if(visited) {
+        if (visited) {
             this.setState({ showInfo: false })
             //do not view Popup
-       } else {
+        } else {
             //this is the first time
             localStorage["alreadyVisited"] = true;
-            this.setState({ showInfo: true});
-       }
-        this.setState({ isLoading: true })
-        await apis.getAreaList().then(response => {
-            // console.log(response.data)
-            this.setState({
-                areas: response.data,
-                isLoading: false
-            })
-            this.countTodosFunction();
-        })
+            this.setState({ showInfo: true });
+        }
+        this.countTodosFunction();
+        // await apis.getAreaList().then(response => {
+        //     // console.log(response.data)
+        //     this.setState({
+        //         areas: response.data,
+        //         isLoading: false
+        //     })  
+        //})
+        this.setState({isLoading: false});
     }
 
-    handleLoadData = async () => {
-        console.log("handle load data in areas!")
-        await apis.getAreaList().then(response => {
-            this.setState({
-                areas: response.data,
-                isLoading: false
-            })
-        })
-    }
+    // handleLoadData = async () => {
+    //     console.log("handle load data in areas!")
+    //     await apis.getAreaList().then(response => {
+    //         this.setState({
+    //             areas: response.data,
+    //             isLoading: false
+    //         })
+    //     })
+    // }
 
     countTodosFunction = () => {
         let countTodos = 0;
@@ -98,17 +102,17 @@ export default class Areas extends Component {
     }
 
     changeInfoDisplay = () => {
-        this.setState({showInfo: !this.state.showInfo})
+        this.setState({ showInfo: !this.state.showInfo })
     }
 
     render() {
         // Renders all Areas
-        let displayareas = this.state.areas.map((area, index) => {
-            let taskcount = this.state.areas[index].todos.length;
+        let displayareas = this.props.areas.map((area, index) => {
+            let taskcount = this.props.areas[index].todos.length;
             return (
-                <SingleArea id={this.state.areas[index]._id}
+                <SingleArea id={this.props.areas[index]._id}
                     className='singleArea'
-                    key={this.state.areas[index]._id}
+                    key={this.props.areas[index]._id}
                     btnValue={index}
                     updateAreas={this.handleLoadData}
                     color={area.color}
@@ -130,19 +134,19 @@ export default class Areas extends Component {
                     />
                     {this.state.showInfo &&
                         <div className="infoText">
-                            Happylist helps you to gain a better Work-Life-Balance and to stop procrastinating!<br/>
-                            You can add different Areas for your life e.g. Health and Work and add Tasks to those Areas.<br/>
+                            Happylist helps you to gain a better Work-Life-Balance and to stop procrastinating!<br />
+                            You can add different Areas for your life e.g. Health and Work and add Tasks to those Areas.<br />
                             After you filled your Areas you can create a new todo list.
-                            Have fun playing around! 
+                            Have fun playing around!
                             <input type="button" value="OK" onClick={this.changeInfoDisplay}></input>
-                            <span style={{fontSize:".8em"}}>This project is still a work in progress. Important features like a Login will follow!</span>
+                            <span style={{ fontSize: ".8em" }}>This project is still a work in progress. Important features like a Login will follow!</span>
                         </div>}
                     <Switch>
                         {/* Shows all the Areas */}
                         <Route path="/">
                             <div className='moduleOverview'>
                                 {this.state.newAreaActive ?
-                                    <NewArea cancelClick={this.toggleActive} reloadAreas={this.handleLoadData} /> : null}
+                                    <NewArea cancelClick={this.toggleActive} reloadAreas={this.props.reloadAreas} /> : null}
                                 {this.state.isLoading ? "Loading Data" : displayareas}
                             </div>
                         </Route>
