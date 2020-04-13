@@ -24,7 +24,7 @@ export default class MainView extends Component {
         listPositionLeft: 450,
         isLoading: false,
         areas: [],
-        testProp: "Hi I am a test!"
+        allTaskCount: 0,
     }
 
     // Loading Areas 
@@ -35,6 +35,7 @@ export default class MainView extends Component {
                 areas: response.data,
                 isLoading: false
             })
+            this.countTodosFunction();
         })
     }
 
@@ -46,6 +47,14 @@ export default class MainView extends Component {
                 isLoading: false
             })
         })
+    }
+
+    countTodosFunction = () => {
+        let countTodos = 0;
+        this.state.areas.forEach(element => {
+            countTodos += element.todos.length;
+        });
+        this.setState({ allTaskCount: countTodos })
     }
 
     render() {
@@ -84,8 +93,8 @@ export default class MainView extends Component {
                         });
                     }}>
                     <Areas
-                        testProp={this.state.testProp}
                         areas={this.state.areas}
+                        taskCount={this.state.allTaskCount}
                         reloadAreas={this.handleLoadData} />
                 </Rnd>
                 <div style={{ left: this.state.listPositionLeft }} className='mainList'>

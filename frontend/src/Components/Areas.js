@@ -35,7 +35,8 @@ export default class Areas extends Component {
             localStorage["alreadyVisited"] = true;
             this.setState({ showInfo: true });
         }
-        this.countTodosFunction();
+        console.log("CDM Areas", this.props.areas.length)
+        // this.countTodosFunction();
         // await apis.getAreaList().then(response => {
         //     // console.log(response.data)
         //     this.setState({
@@ -56,13 +57,14 @@ export default class Areas extends Component {
     //     })
     // }
 
-    countTodosFunction = () => {
-        let countTodos = 0;
-        this.state.areas.forEach(element => {
-            countTodos += element.todos.length;
-        });
-        this.setState({ allTaskCount: countTodos })
-    }
+    // countTodosFunction = () => {
+    //     let countTodos = 0;
+    //     this.props.areas.forEach(element => {
+    //         countTodos += element.todos.length;
+    //     });
+    //     this.setState({ allTaskCount: countTodos })
+    //     console.log("TODOCOUNT", countTodos)
+    // }
 
 
     addTodo = (event) => {
@@ -123,7 +125,7 @@ export default class Areas extends Component {
         return (
             <Router>
                 <div>
-                    <UpperView areaCount={this.state.areas.length} allTodoCount={this.state.allTaskCount} />
+                    <UpperView areaCount={this.props.areas.length} allTodoCount={this.props.taskCount} />
                     {/* #TODO Otherwise show areas that already exist */}
                     <Areabar areaActive={this.state.areaActive}
                         nameArea={this.state.newAreaActive ? "Cancel New Area" : "Add Area"}
