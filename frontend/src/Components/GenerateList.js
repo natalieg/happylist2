@@ -12,6 +12,7 @@ export default class GenerateList extends Component {
             userMaxTasks: 10,
             areas: [],
             activeAreas: [],
+            overallTasks: 0,
             todoList: [],
             currentTodoListCount: 0,
             isLoading: false,
@@ -24,6 +25,31 @@ export default class GenerateList extends Component {
             timeLeft: 0,
             allTime: 0,
             tooltipToggleComplete: "",
+        }
+    }
+
+    // Updates when the Areas load for the Parent component
+    // Fills Listarea only 
+    static getDerivedStateFromProps(props, state) {
+        if (props.areas.length !== state.areas.length || props.taskCount !== state.overallTasks) {
+            let propAreas = props.areas;
+            let tempAreas = [];
+            propAreas.forEach(area => {
+                tempAreas.push({
+                    id: area._id,
+                    areaTitle: area.areaTitle,
+                    state: true,
+                    color: area.color,
+                    todoCount: area.incompleteTodoCount
+                })
+            });
+            return {
+                areas: propAreas,
+                activeAreas: tempAreas,
+                overallTasks: props.taskCount
+            };
+        } else {
+            return null;
         }
     }
 
@@ -46,8 +72,6 @@ export default class GenerateList extends Component {
                         tempTime = tempTime + todo.sessionTime
                     }
                 });
-                //FIXME loeschen
-                console.log("TEMPTODOLIST", tempTodos)
                 if (tempTodos.length > 0) {
                     this.setState({
                         todoList: tempTodos,
@@ -70,23 +94,6 @@ export default class GenerateList extends Component {
     componentDidMount = async () => {
         this.setState({ isLoading: true })
         this.loadSavedList();
-        await apis.getAreasWithoutEmpty().then(response => {
-            let tempActive = [];
-            response.data.forEach(element => {
-                tempActive.push({
-                    id: element._id,
-                    state: true,
-                    areaTitle: element.areaTitle,
-                    color: element.color,
-                    todoCount: element.incompleteTodoCount
-                })
-            });
-            this.setState({
-                areas: response.data,
-                isLoading: false,
-                activeAreas: tempActive
-            })
-        })
     }
 
     calcProgress = () => {
@@ -158,7 +165,6 @@ export default class GenerateList extends Component {
                         sessionTime: todo.sessionTime,
                         state: false
                     })
-                    console.log("generatelist todo", todo)
                 })
                 this.setState({
                     todoList: []
@@ -208,7 +214,9 @@ export default class GenerateList extends Component {
 
     //change Selected Areas
     changeActiveAreas = (e) => {
+        console.log("TRYING TO CHANGE AREA STATUS")
         let tempActive = this.state.activeAreas;
+        console.log(tempActive)
         var foundIndex = tempActive.findIndex(x => x.id === e.target.id);
         tempActive[foundIndex].state = !tempActive[foundIndex].state;
         this.setState({ activeAreas: tempActive })
@@ -276,6 +284,7 @@ export default class GenerateList extends Component {
 
         return (
             <div className="list">
+                {/* TODO Styling, remove H1, check how to really style the action well */}
                 <h1>Generate your List!</h1>
                 <button onClick={this.createTodoList}>Create</button>
                 <Tooltip className="tooltip" title="Settings" arrow placement="top">

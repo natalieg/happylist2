@@ -13,7 +13,8 @@ export default class Areas extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            areas: this.props.areas,
+            areas: [],
+            reloadAreas: this.props.reloadAreas,
             isLoading: true,
             dummyCounter: 0,
             allTaskCount: 0,
@@ -22,6 +23,13 @@ export default class Areas extends Component {
             showInfo: false,
             testProp: props.testProp,
         }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            areas: props.areas,  
+            allTaskCount: props.taskCount     
+        };
     }
 
     // Loading Areas 
@@ -35,40 +43,11 @@ export default class Areas extends Component {
             localStorage["alreadyVisited"] = true;
             this.setState({ showInfo: true });
         }
-        console.log("CDM Areas", this.props.areas.length)
-        // this.countTodosFunction();
-        // await apis.getAreaList().then(response => {
-        //     // console.log(response.data)
-        //     this.setState({
-        //         areas: response.data,
-        //         isLoading: false
-        //     })  
-        //})
-        this.setState({isLoading: false});
+        console.log("CDM Areas", this.state.areas.length)
+        this.setState({ isLoading: false });
     }
 
-    // handleLoadData = async () => {
-    //     console.log("handle load data in areas!")
-    //     await apis.getAreaList().then(response => {
-    //         this.setState({
-    //             areas: response.data,
-    //             isLoading: false
-    //         })
-    //     })
-    // }
-
-    // countTodosFunction = () => {
-    //     let countTodos = 0;
-    //     this.props.areas.forEach(element => {
-    //         countTodos += element.todos.length;
-    //     });
-    //     this.setState({ allTaskCount: countTodos })
-    //     console.log("TODOCOUNT", countTodos)
-    // }
-
-
     addTodo = (event) => {
-        console.log("HELLO")
         let indexOfModule = event.target.value;
         let allareas = [...this.state.areas]; // create copy
         //remove me later more dummy data stuff
@@ -109,14 +88,14 @@ export default class Areas extends Component {
 
     render() {
         // Renders all Areas
-        let displayareas = this.props.areas.map((area, index) => {
-            let taskcount = this.props.areas[index].todos.length;
+        let displayareas = this.state.areas.map((area, index) => {
+            let taskcount = this.state.areas[index].todos.length;
             return (
-                <SingleArea id={this.props.areas[index]._id}
+                <SingleArea id={this.state.areas[index]._id}
                     className='singleArea'
-                    key={this.props.areas[index]._id}
+                    key={this.state.areas[index]._id}
                     btnValue={index}
-                    updateAreas={this.handleLoadData}
+                    updateAreas={this.state.reloadAreas}
                     color={area.color}
                     name={area.areaTitle}
                     taskcount={taskcount} />
@@ -125,7 +104,7 @@ export default class Areas extends Component {
         return (
             <Router>
                 <div>
-                    <UpperView areaCount={this.props.areas.length} allTodoCount={this.props.taskCount} />
+                    <UpperView areaCount={this.state.areas.length} allTodoCount={this.state.allTaskCount} />
                     {/* #TODO Otherwise show areas that already exist */}
                     <Areabar areaActive={this.state.areaActive}
                         nameArea={this.state.newAreaActive ? "Cancel New Area" : "Add Area"}
@@ -148,7 +127,7 @@ export default class Areas extends Component {
                         <Route path="/">
                             <div className='moduleOverview'>
                                 {this.state.newAreaActive ?
-                                    <NewArea cancelClick={this.toggleActive} reloadAreas={this.props.reloadAreas} /> : null}
+                                    <NewArea cancelClick={this.toggleActive} reloadAreas={this.state.reloadAreas} /> : null}
                                 {this.state.isLoading ? "Loading Data" : displayareas}
                             </div>
                         </Route>

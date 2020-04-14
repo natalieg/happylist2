@@ -24,6 +24,7 @@ export default class MainView extends Component {
         listPositionLeft: 450,
         isLoading: false,
         areas: [],
+        areasWithTodos: [],
         allTaskCount: 0,
     }
 
@@ -31,8 +32,16 @@ export default class MainView extends Component {
     componentDidMount = async () => {
         this.setState({ isLoading: true })
         await apis.getAreaList().then(response => {
+            let tempAreas = response.data;
+            let tempAreaWithTask = [];
+            tempAreas.forEach(area => {
+                if(area.incompleteTodoCount > 0){
+                    tempAreaWithTask.push(area)
+                }
+            });
             this.setState({
-                areas: response.data,
+                areas: tempAreas,
+                areasWithTodos: tempAreaWithTask,
                 isLoading: false
             })
             this.countTodosFunction();
@@ -42,10 +51,19 @@ export default class MainView extends Component {
     handleLoadData = async () => {
         console.log("handle load data in areas!")
         await apis.getAreaList().then(response => {
+            let tempAreas = response.data;
+            let tempAreaWithTask = [];
+            tempAreas.forEach(area => {
+                if(area.incompleteTodoCount > 0){
+                    tempAreaWithTask.push(area)
+                }
+            });
             this.setState({
                 areas: response.data,
+                areasWithTodos: tempAreaWithTask,
                 isLoading: false
             })
+            this.countTodosFunction();
         })
     }
 
@@ -54,6 +72,7 @@ export default class MainView extends Component {
         this.state.areas.forEach(element => {
             countTodos += element.todos.length;
         });
+        console.log("MOTHER counting todos", countTodos)
         this.setState({ allTaskCount: countTodos })
     }
 
@@ -98,7 +117,10 @@ export default class MainView extends Component {
                         reloadAreas={this.handleLoadData} />
                 </Rnd>
                 <div style={{ left: this.state.listPositionLeft }} className='mainList'>
-                    <GenerateList />
+                    <GenerateList
+                        areas={this.state.areasWithTodos}
+                        taskCount={this.state.allTaskCount}
+                    />
                 </div>
             </div>
         )
