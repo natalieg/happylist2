@@ -72,12 +72,10 @@ export default class MainView extends Component {
         this.state.areas.forEach(element => {
             countTodos += element.todos.length;
         });
-        console.log("MOTHER counting todos", countTodos)
         this.setState({ allTaskCount: countTodos })
     }
 
     render() {
-        console.log("MainView", this.state.areas)
         return (
             <div className="mainView">
                 {/* TODO set min and max width */}
@@ -114,7 +112,9 @@ export default class MainView extends Component {
                     <Areas
                         areas={this.state.areas}
                         taskCount={this.state.allTaskCount}
-                        reloadAreas={this.handleLoadData} />
+                        reloadAreas={this.handleLoadData} 
+                        areaWidth={this.state.areaWidth}
+                        />
                 </Rnd>
                 <div style={{ left: this.state.listPositionLeft }} className='mainList'>
                     <GenerateList

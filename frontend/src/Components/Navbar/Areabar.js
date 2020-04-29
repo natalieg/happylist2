@@ -7,11 +7,21 @@ export default function Areabar(props) {
                 <li>
                     {props.areaActive &&
                         <div>
-                            <button className="navBtn" onClick={props.clickArea}><i className="fas fa-plus"/> {props.nameArea}</button>
-                            <span>&bull;</span>
-                            <button className="navBtn" onClick={props.archiveTodos}>{props.nameArchive}</button>
-                            <span>&bull;</span>
-                            <button className="navBtn" onClick={props.changeInfoDisplay}>Info</button>
+                            <button className="navBtn" onClick={props.clickArea}><i className="fas fa-plus" />
+                                <span className={props.areaWidth < 400 ? "hideSmall" : null}>
+                                    {props.nameArea}
+                                </span>
+                            </button>
+                            <button className="navBtn" onClick={props.archiveTodos}><i className="fas fa-archive"></i>
+                                <span className={props.areaWidth < 400 ? "hideSmall" : null}>
+                                    {props.nameArchive}
+                                </span>
+                            </button>
+                            <button className="navBtn" onClick={props.changeInfoDisplay}><i className="fas fa-question-circle"></i>
+                                <span className={props.areaWidth < 400 ? "hideSmall" : null}>
+                                    Info
+                             </span>
+                            </button>
                         </div>
                     }
                 </li>

@@ -22,15 +22,24 @@ export default class Areas extends Component {
             areaActive: true,
             showInfo: false,
             testProp: props.testProp,
+            areaWidth: 0,
         }
     }
 
     static getDerivedStateFromProps(props, state) {
+        let tempWidth = 0;
+        let propWidth = props.areaWidth;
+        if(typeof propWidth === 'string'){
+            tempWidth = propWidth.substring(0, propWidth.length -2);
+            tempWidth = parseInt(tempWidth);
+        }
         return {
             areas: props.areas,  
-            allTaskCount: props.taskCount     
+            allTaskCount: props.taskCount, 
+            areaWidth: tempWidth
         };
     }
+
 
     // Loading Areas 
     componentDidMount = async () => {
@@ -112,6 +121,7 @@ export default class Areas extends Component {
                         nameArchive="Archive Finished Tasks"
                         archiveTodos={this.archiveFinishedTodos}
                         changeInfoDisplay={this.changeInfoDisplay}
+                        areaWidth={this.state.areaWidth}
                     />
                     {this.state.showInfo &&
                         <div className="infoText">
