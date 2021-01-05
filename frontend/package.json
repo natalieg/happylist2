@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/styles": "^4.9.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "concurrently": "^5.1.0",
     "css-loader": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
